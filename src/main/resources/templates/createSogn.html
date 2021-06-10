@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:classth="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilføj Sogn</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 style="margin: 20px">Tilføj sogn</h1>
+    </div>
+    <div class="row" style="justify-content: center">
+        <form action="/create" method="post" th:object="${sogn}">
+            <div class="form-group">
+                <input class="form-control" type="number" name="kode" placeholder="Sogne kode">
+                <input class="form-control" type="text" name="navn" placeholder="Navn">
+                <input class="form-control" type="number" min="0" step=".01" name="positivProcent" placeholder="positiv procent">
+                <br>
+                <label for="datoForNedlukning">Vælg dato for nedlukning</label>
+                <input class="form-control" type="date" id="datoForNedlukning" name="datoForNedlukning" placeholder="Dato for nedlukning">
+            </div>
+            <div class="form-group">
+                <label for="kommune">Vælg kommune</label>
+                <select class="form-control selectpicker" id="kommune" name="kommune">
+                    <option th:each="kommune : ${kommuner}"
+                            th:value="${kommune.id}"
+                            th:text="${kommune.navn}"
+                    >brand
+                    </option>
+                </select>
+            </div>
+            <p id="space"></p>
+            <div class="form-group">
+                <input type="submit" value="Gem" class="btn btn-success" role="button">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

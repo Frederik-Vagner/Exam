@@ -1,45 +1,61 @@
 package jpa.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-
 public class Kommune {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    private int kode;
+    private Long kode;
+
     private String navn;
-    @JsonBackReference
-    @OneToOne
-    private Sogn sogn;
 
+    //OneToOne relationship
+    @JsonManagedReference
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "kommune")
+    private List<Sogn> sogne;
+
+    //constructor overload
     public Kommune() {
     }
 
-    public Kommune(int kode, String navn) {
+    public Kommune(Long kode, String navn) {
         this.kode = kode;
         this.navn = navn;
     }
 
-    public Long getId() {
+    //method returns average positivprocent of sogne
+    public double getAveragePositivProcent(){
+        double total=0;
+        int count=0;
+        for (Sogn sogn : sogne) {
+            total += sogn.getPositivProcent();
+            count++;
+        }
+        return total/count;
+    }
+
+
+    //STANDARD GETTERS AND SETTERS
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getKode() {
+    public Long getKode() {
         return kode;
     }
 
-    public void setKode(int kode) {
+    public void setKode(Long kode) {
         this.kode = kode;
     }
 
@@ -49,5 +65,24 @@ public class Kommune {
 
     public void setNavn(String navn) {
         this.navn = navn;
+    }
+
+    public List<Sogn> getSogne() {
+        return sogne;
+    }
+
+    public void setSogne(List<Sogn> sogns) {
+        this.sogne = sogns;
+    }
+
+    //STANDARD TOSTRING
+    @Override
+    public String toString() {
+        return "Kommune{" +
+                "id=" + id +
+                ", kode=" + kode +
+                ", navn='" + navn + '\'' +
+                ", sogns=" + sogne +
+                '}';
     }
 }

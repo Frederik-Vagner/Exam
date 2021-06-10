@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:classth="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste over kommuner</title>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center; margin: 20px">Liste over kommuner</h1>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Kommunekode</th>
+                <th>Navn</th>
+                <th>Positiv procent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="kommune : ${kommuner}">
+                <td th:text="${kommune.id}"/>
+                <td th:text="${kommune.kode}"/>
+                <td th:text="${kommune.navn}"/>
+                <td th:text="${kommune.getAveragePositivProcent()}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <a href="createKommune" class="btn btn-dark" role="button" style="margin: 10px; width: 100px">Tilføj Kommune</a>
+        <a href="/" class="btn btn-dark" role="button" style="margin: 10px; width: 100px">Hjem</a>
+    </div>
+
+</div>
+</body>
+</html>
